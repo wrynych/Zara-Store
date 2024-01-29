@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '/workspaces/Zara-Store [Codespaces: musical happiness]/zara_store.rb/' 
+require_relative '/workspaces/Zara-Store [Codespaces: musical happiness]/zara_store.rb/'
 
 class TestZaraStore < Minitest::Test
   def setup
