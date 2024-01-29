@@ -70,4 +70,4 @@ class ZaraStore
     puts "After 30 days, store credit will be provided for in-store purchases."
     puts "For online purchases, a 30-day full refund policy applies with no exceptions."
   end
-en
+end

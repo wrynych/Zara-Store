@@ -1,5 +1,8 @@
-# ruby-cli-template
+# Zara Store CLI
 
-Use this repository as a template for your Ruby CLI (command line interface) project.
+Welcome to the Zara Store Command-Line Interface (CLI) app!
 
-- Ruby version: `3.2.1`
+This CLI app simulates a Zara store, allowing users to inquire about item availability, check delivery details, and understand the return and exchange policy.
+
+## Usage
+Run `ruby app.rb` in the terminal.
