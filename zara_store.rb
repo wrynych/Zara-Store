@@ -1,75 +1,91 @@
-require_relative "item"
+# zara_store.rb
 
 class ZaraStore
+  attr_accessor :inventory, :cart
+
   def initialize
-    @items = []
+    @inventory = {
+      "shirt" => { availability: 3, price: 29.99 },
+      "pant" => { availability: 0, price: 49.99 },
+      "dress" => { availability: 10, price: 79.99 },
+    }
+    @cart = []
   end
 
-  def open
-    puts "Welcome to Zara!"
+  def welcome_message
+    puts "\nWelcome to Zara!"
+    if @cart.empty?
+      puts "Your cart is empty. Please type 'buy' to start shopping or type 'exit' to leave."
+    else
+      puts "Your cart has items. Type 'buy' to add more items or 'exit' to leave."
+    end
+    customer_interaction
+  end
 
+  def customer_interaction
     loop do
-      if @items.empty?
-        puts 'Zara store is empty. Type "add" to start adding items or type "exit" to leave.'
-      else
-        puts 'Type "add", "check", or "list" to manage the store or type "exit" to leave.'
-      end
+      puts "\nType 'buy' to start shopping or 'exit' to leave."
+      choice = gets.chomp.downcase
 
-      action = gets.chomp.downcase
-
-      case action
-      when "add"
-        add_item()
-      when "check"
-        check_availability()
-      when "list"
-        list_items()
-      when "exit"
+      case choice
+      when 'buy'
+        buy_items
+      when 'exit'
         puts "Thank you for visiting Zara. Have a great day!"
         break
       else
-        puts "Invalid option. Please choose a valid option."
+        puts "Invalid option. Please choose 'buy' or 'exit'."
       end
     end
   end
 
-  private
+  def buy_items
+    puts "\nPlease type 'shirt', 'pants', or 'dress' to check availability."
+    item = gets.chomp.downcase
 
-  def add_item
-    puts "Enter item details:"
-    puts "Name:"
-    name = gets.chomp.downcase
-    puts "Availability:"
-    availability = gets.chomp.to_i
-    puts "Price:"
-    price = gets.chomp.to_f
-
-    item = Item.new(name, availability, price)
-    @items.push(item)
-
-    puts "#{item.to_s} has been added to Zara store."
-  end
-
-  def check_availability
-    puts "Enter the name of the item you want to check:"
-    item_name = gets.chomp.downcase
-
-    item = @items.find { |item| item.name == item_name }
-
-    if item
-      puts "#{item.to_s} is available in Zara store."
+    if @inventory.key?(item) && @inventory[item][:availability] > 0
+      check_availability(item)
     else
-      puts "Sorry, we don't have #{item_name} in our inventory at the moment."
+      puts "\nSorry, we either don't have #{item} or it's out of stock."
     end
   end
 
-  def list_items
-    if @items.empty?
-      puts "No items at the moment."
+  def check_availability(item)
+    puts "\nWe have #{@inventory[item][:availability]} #{item}s for $#{@inventory[item][:price]} each."
+    puts "Would you like to add to your cart? (yes/no)"
+    add_to_cart = gets.chomp.downcase
+
+    case add_to_cart
+    when 'yes'
+      add_to_cart(item)
+    when 'no'
+      continue_shopping
     else
-      @items.each do |item|
-        puts item.to_s
-      end
+      puts "Invalid option. Returning to the main menu."
+    end
+  end
+
+  def add_to_cart(item)
+    @cart.push(item)
+    puts "\nThank you for your purchase!"
+    continue_shopping
+  end
+
+  def continue_shopping
+    puts "\nWould you like to buy something else? Please type 'shirt', 'pants', or 'dress' to check availability, or type 'exit' to leave."
+    choice = gets.chomp.downcase
+
+    case choice
+    when 'shirt', 'pants', 'dress'
+      check_availability(choice)
+    when 'exit'
+      puts "Thank you for shopping at Zara. Have a great day!"
+    else
+      puts "Invalid option. Returning to the main menu."
     end
   end
 end
+
+# Run the store
+zara = ZaraStore.new
+zara.welcome_message

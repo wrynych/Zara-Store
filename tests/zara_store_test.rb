@@ -18,6 +18,6 @@ class TestZaraStore < Minitest::Test
     end
   end
 
-  # Add more tests as needed
+  assert_equal zara.number_of_items("shirt"), zara.inventory["shirt"][:availability]
 
 end
