@@ -28,7 +28,7 @@ class ZaraStore
 
       case choice
       when 1
-        check_availability
+        check_availability_interaction
       when 2
         inquire_about_delivery
       when 3
@@ -42,18 +42,23 @@ class ZaraStore
     end
   end
 
-  def check_availability
+  def check_availability_interaction
     puts "\n"
     puts "What item are you interested in?"
     item = gets.chomp.downcase
+    number_of_items(item)
+  end
 
+  def number_of_items(item)
     if @inventory.key?(item)
       puts "\n"
       puts "Great choice! We have #{@inventory[item][:availability]} #{item}s available."
       puts "Each #{item} costs $#{@inventory[item][:price]}."
+      return @inventory[item][:availability]
     else
       puts "\n"
       puts "Sorry, we don't have #{item} in our inventory at the moment."
+      return 0
     end
   end
 
