@@ -1,8 +1,10 @@
+
 # app.rb
 require_relative 'zara_store'
 
 zara = ZaraStore.new
 puts zara.welcome_message
+zara.customer_interaction
 
 loop do
   choice = gets.chomp.downcase

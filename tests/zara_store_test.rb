@@ -1,4 +1,3 @@
-# zara_store_test.rb
 require 'minitest/autorun'
 require './zara_store.rb'
 
@@ -12,4 +11,3 @@ class TestZaraStore < Minitest::Test
     assert_nil @zara.number_of_items("horse")
   end
 end
-
