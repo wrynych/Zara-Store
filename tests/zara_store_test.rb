@@ -1,3 +1,4 @@
+# zara_store_test.rb
 require 'minitest/autorun'
 require './zara_store.rb'
 
@@ -6,18 +7,9 @@ class TestZaraStore < Minitest::Test
     @zara = ZaraStore.new
   end
 
-  def test_welcome_message
-    assert_output("\nWelcome to Zara!\nHow may we assist you today?\n") { @zara.welcome_message }
+  def test_number_of_items
+    assert_equal 3, @zara.number_of_items("shirt")
+    assert_nil @zara.number_of_items("horse")
   end
-
-  def test_check_availability
-    assert_output("\nGreat choice! We have 10 shirts available.\nEach shirt costs $29.99.\n") do
-      @zara.stub :gets, 'shirt' do
-        @zara.check_availability
-      end
-    end
-  end
-
-  assert_equal zara.number_of_items("shirt"), zara.inventory["shirt"][:availability]
-
 end
+

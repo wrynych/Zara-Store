@@ -1,5 +1,3 @@
-# zara_store.rb
-
 class ZaraStore
   attr_accessor :inventory, :cart
 
@@ -7,19 +5,13 @@ class ZaraStore
     @inventory = {
       "shirt" => { availability: 3, price: 29.99 },
       "pant" => { availability: 0, price: 49.99 },
-      "dress" => { availability: 10, price: 79.99 },
+      "dress" => { availability: 10, price: 79.99 }
     }
     @cart = []
   end
 
   def welcome_message
-    puts "\nWelcome to Zara!"
-    if @cart.empty?
-      puts "Your cart is empty. Please type 'buy' to start shopping or type 'exit' to leave."
-    else
-      puts "Your cart has items. Type 'buy' to add more items or 'exit' to leave."
-    end
-    customer_interaction
+    "\nWelcome to Zara!\nHow may we assist you today?"
   end
 
   def customer_interaction
@@ -29,7 +21,7 @@ class ZaraStore
 
       case choice
       when 'buy'
-        buy_items
+        buy_items_prompt
       when 'exit'
         puts "Thank you for visiting Zara. Have a great day!"
         break
@@ -39,19 +31,22 @@ class ZaraStore
     end
   end
 
-  def buy_items
+  def buy_items_prompt
     puts "\nPlease type 'shirt', 'pants', or 'dress' to check availability."
     item = gets.chomp.downcase
+    buy_items(item)
+  end
 
+  def buy_items(item)
     if @inventory.key?(item) && @inventory[item][:availability] > 0
       check_availability(item)
     else
-      puts "\nSorry, we either don't have #{item} or it's out of stock."
+      puts "Sorry, we either don't have #{item} or it's out of stock."
     end
   end
 
   def check_availability(item)
-    puts "\nWe have #{@inventory[item][:availability]} #{item}s for $#{@inventory[item][:price]} each."
+    puts "Great choice! We have #{@inventory[item][:availability]} #{item}s available for $#{@inventory[item][:price]} each."
     puts "Would you like to add to your cart? (yes/no)"
     add_to_cart = gets.chomp.downcase
 
@@ -67,7 +62,7 @@ class ZaraStore
 
   def add_to_cart(item)
     @cart.push(item)
-    puts "\nThank you for your purchase!"
+    puts "Thank you for your purchase!"
     continue_shopping
   end
 
@@ -84,8 +79,11 @@ class ZaraStore
       puts "Invalid option. Returning to the main menu."
     end
   end
+
+  def number_of_items(item)
+    @inventory[item][:availability] if @inventory.key?(item)
+  end
 end
 
-# Run the store
 zara = ZaraStore.new
-zara.welcome_message
+zara.customer_interaction
